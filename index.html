@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>notryanb.dev</title>
+    <style>
+
+      html {
+        overflow-y: scroll
+      }
+
+      body {
+        font-size: 1.2rem;
+      }
+
+      #main,
+      #header {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0;
+      }
+
+      #header {
+        font-family: monospace;
+        text-align: center;
+      }
+
+      #main {
+        font-family: 'helvetica';
+        font-weight: lighter;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header">
+      <h1>notryanb.dev</h1>
+      <nav>
+        <a href="/about">about</a>
+        <a href="/">blog</a>
+      </nav>
+      <p>Welcome to the personal blog of notryanb</p>
+    </div>
+    <div id="main">
+      <p>
+      Keeping it <em>simple</em>.
+      </p>
+
+      <p>
+        I've always had difficulty maintaining a blog.
+        My previous one is still available on github pages at 
+        <a href="https://notryanb.github.io/" target="_blank">https://notryanb.github.io/</a>.
+        So why make a new one?
+        I reflect on this often and tried to figure out why it wasn't working.
+      </p>
+
+      <p> 
+        Simplicity.
+        I had previously been using Jekyll (Ruby) and then tried out Zola (Rust).
+        In both cases my decreased motivation stemmed from not knowing the frameworks very well.
+        I could've spent a lot of time learning how they work, but then im not writing.
+        After stumbling upon this <a href="https://j3s.sh/thought/my-website-is-one-binary.html" target="_blank">article</a>,
+        I decided I wanted to do something similar.
+      </p>
+
+      <p>
+        My main motivation here is only use what I <em>need</em> 
+        and pick up a few skills on the way.
+        This blog is a single Rust binary.
+        The current dependencies are hyper & tokio.
+        There is no templating engine. I'm writing html and inlining the CSS.
+        This will probably change in the future, but only as I need it.
+      </p>
+
+      <p>
+        In the near future I anticipate writing articles on using Rust for audio.
+        Some of the styling may become more advanced and maybe I'll even use a template engine like tera.
+        I won't make any other promises yet, so I guess I'll see where this takes me.
+      </p>
+    <div>
+  </body>
+</html>

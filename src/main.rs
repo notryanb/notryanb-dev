@@ -2,35 +2,26 @@ use std::io::prelude::*;
 use std::net::SocketAddr;
 use hyper::{Body, Method, Request, Response, Server, StatusCode};
 use hyper::service::{make_service_fn, service_fn};
-use serde::Serialize;
-use tinytemplate::TinyTemplate;
-
-#[derive(Serialize)]
-pub struct Context {
-    content: String,
-}
 
 async fn app(req: Request<Body>) -> Result<Response<Body>, hyper::Error> {
     match (req.method(), req.uri().path()) {
         (&Method::GET, "/") => {
-            // read in the base template layout to a buffer
-            let mut file = std::fs::File::open("./layout.html")
+            let mut file = std::fs::File::open("./index.html")
                 .expect("failed to find index.html");
             let mut layout = String::new();
             file.read_to_string(&mut layout)
                 .expect("failed to read file");
 
-            // Pass the template buffer into the templater
-            let mut tt = TinyTemplate::new();
-            tt.add_template("thingy", &layout).expect("failed to add template");
-            let context = Context {
-                content: "Test page content".into()
-            };
+            Ok(Response::new(Body::from(layout)))
+        },
+        (&Method::GET, "/about") => {
+            let mut file = std::fs::File::open("./about.html")
+                .expect("failed to find about.html");
+            let mut layout = String::new();
+            file.read_to_string(&mut layout)
+                .expect("failed to read file");
 
-            let rendered = tt.render("thingy", &context)
-                .expect("failed to render template");
-
-            Ok(Response::new(Body::from(rendered)))
+            Ok(Response::new(Body::from(layout)))
         },
         _ => {
             let mut not_found = Response::default();
