@@ -40,6 +40,32 @@ async fn app(req: Request<Body>) -> Result<Response<Body>, hyper::Error> {
 
             Ok(Response::new(Body::from(format!("{}\n", ip))))
         }
+        (&Method::GET, "/u32") => {
+            let params: std::collections::HashMap<String, String> = req
+                .uri()
+                .query()
+                .map(|v| {
+                    url::form_urlencoded::parse(v.as_bytes())
+                        .into_owned()
+                        .collect()
+                })
+                .unwrap_or_else(std::collections::HashMap::new);
+
+            if let Some(num) = params.get("q") {
+                match notryanb_dev::parse_num(num) {
+                    Ok(answer) => {
+                        let msg = format!("Hex: {answer:#x}\nOctal: {answer:#o}\nBinary: {answer:#b}\nDecimal: {answer}");
+                        Ok(Response::new(Body::from(msg.to_string())))
+                    },
+                    Err(err) => Ok(Response::new(Body::from(err.to_string())))
+                }
+            } else {
+                let msg = "Format a 32bit unsigned int to and from hex/octal/binary/decimal\nUsage: add query paramter, 'q'\n
+examples:\n\t?q=0xc00ffee\n\t?q=0o666\n\t?q=0b01001011\n\t?q=8675309";
+                Ok(Response::new(Body::from(msg)))
+            }
+
+        }
         _ => {
             let mut not_found = Response::default();
             *not_found.status_mut() = StatusCode::NOT_FOUND;
